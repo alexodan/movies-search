@@ -5,6 +5,7 @@ import SearchBar from "./components/SearchBar";
 
 const App = () => {
   const [popularMovies, setPopularMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,10 +13,10 @@ const App = () => {
   useEffect(() => {
     fetchPopularMovies(page).then((data) => {
       const { page, results, total_pages } = data;
-      console.log(results);
       setPage(page);
       setTotalPages(total_pages);
       setPopularMovies(results);
+      setFilteredMovies(results);
     });
     return () => {};
   }, []);
@@ -27,22 +28,23 @@ const App = () => {
   }, [searchTerm]);
 
   const handleSearchChange = (query) => {
+    console.log(query);
+    setSearchTerm(query);
     if (query === "") {
-      setPopularMovies(popularMovies);
+      setFilteredMovies(popularMovies);
     } else {
       const normalizedQuery = query.toLowerCase();
-      const filteredMovies = popularMovies.filter((movie) =>
+      const filtered = popularMovies.filter((movie) =>
         movie.title.toLowerCase().includes(normalizedQuery)
       );
-      setSearchTerm(query);
-      setPopularMovies(filteredMovies);
+      setFilteredMovies(filtered);
     }
   };
 
   return (
     <div className="p-6">
       <SearchBar onSearchChange={handleSearchChange} />
-      {popularMovies && <MoviesGrid movies={popularMovies} />}
+      {filteredMovies && <MoviesGrid movies={filteredMovies} />}
       {/* <Paginator current={page} total={totalPages} /> */}
     </div>
   );
