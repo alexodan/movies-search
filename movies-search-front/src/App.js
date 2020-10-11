@@ -1,16 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchPopularMovies } from "./api";
+import MoviesGrid from "./components/MoviesGrid";
+import SearchBar from "./components/SearchBar";
 
-const App = () => (
-  <div className="max-w-md mx-auto flex p-6 bg-gray-100 mt-10 rounded-lg shadow-xl">
-    <div className="ml-6 pt-1">
-      <h1 className="text-2xl text-blue-700 leading-tight">
-        Tailwind and Create React App
-      </h1>
-      <p className="text-base text-gray-700 leading-normal">
-        Building apps together
-      </p>
+const App = () => {
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    fetchPopularMovies(page).then((data) => {
+      const { page, results, total_pages } = data;
+      console.log(results);
+      setPage(page);
+      setTotalPages(total_pages);
+      setPopularMovies(results);
+    });
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    // call api to search movies...
+    console.log("searching...");
+    return () => {};
+  }, [searchTerm]);
+
+  const handleSearchChange = (query) => {
+    if (query === "") {
+      setPopularMovies(popularMovies);
+    } else {
+      const normalizedQuery = query.toLowerCase();
+      const filteredMovies = popularMovies.filter((movie) =>
+        movie.title.toLowerCase().includes(normalizedQuery)
+      );
+      setSearchTerm(query);
+      setPopularMovies(filteredMovies);
+    }
+  };
+
+  return (
+    <div className="p-6">
+      <SearchBar onSearchChange={handleSearchChange} />
+      {popularMovies && <MoviesGrid movies={popularMovies} />}
+      {/* <Paginator current={page} total={totalPages} /> */}
     </div>
-  </div>
-);
+  );
+};
 
 export default App;
