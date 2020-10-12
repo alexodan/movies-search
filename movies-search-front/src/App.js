@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchPopularMovies } from "./api";
 import MoviesGrid from "./components/MoviesGrid";
+import Paginator from "./components/Paginator";
 import SearchBar from "./components/SearchBar";
 
 const App = () => {
@@ -19,16 +20,17 @@ const App = () => {
       setFilteredMovies(results);
     });
     return () => {};
-  }, []);
+  }, [page]);
 
-  useEffect(() => {
-    // call api to search movies...
-    console.log("searching...");
-    return () => {};
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   if (searchTerm) {
+  //     // call api to search movies...
+  //     console.log("searching...");
+  //   }
+  //   return () => {};
+  // }, [searchTerm]);
 
   const handleSearchChange = (query) => {
-    console.log(query);
     setSearchTerm(query);
     if (query === "") {
       setFilteredMovies(popularMovies);
@@ -41,11 +43,16 @@ const App = () => {
     }
   };
 
+  const onPageClick = (page) => {
+    setSearchTerm("");
+    setPage(page);
+  };
+
   return (
     <div className="p-6">
-      <SearchBar onSearchChange={handleSearchChange} />
+      <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
       {filteredMovies && <MoviesGrid movies={filteredMovies} />}
-      {/* <Paginator current={page} total={totalPages} /> */}
+      <Paginator current={page} total={totalPages} onPageClick={onPageClick} />
     </div>
   );
 };
