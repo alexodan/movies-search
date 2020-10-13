@@ -22,14 +22,6 @@ const App = () => {
     return () => {};
   }, [page]);
 
-  // useEffect(() => {
-  //   if (searchTerm) {
-  //     // call api to search movies...
-  //     console.log("searching...");
-  //   }
-  //   return () => {};
-  // }, [searchTerm]);
-
   const handleSearchChange = (query) => {
     setSearchTerm(query);
     if (query === "") {

@@ -1,4 +1,23 @@
-## Summary
+## How to run it
+
+### Backend
+
+Go to the movies-search-back folder, run `npm install` and then `npm start`.
+<br>I'm using [The Movie Database API](https://developers.themoviedb.org/) to display data about popular movies.
+<br>You will need to provide an API_KEY in order to use it, once you get one go ahead and modify the `.env` file. You can also modify there the port in which the application will start listening but the frontend part will hit to that port, so I don't recommend it.
+
+### Frontend
+
+Go to the movies-search-front folder, run `npm install` and then `npm start`.
+<br>The application will automatically open a new tab on port 3000 as I used create-react-app.
+
+## About the tools
+
+- I used express in the backend as I'm comfortable using it.
+- I used create-react-app because is very easy to get started with.
+- I added Tailwind because I like the utilities provided.
+
+## The assignment
 
 Your task is to create a full stack web application which utilizes a free, public API to pull data from
 and to display that data in the form of a table in the UI. Your backend should access the public API and your frontend should access the backend you set up.
