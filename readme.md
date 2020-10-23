@@ -4,7 +4,7 @@
 
 Go to the movies-search-back folder, run `npm install` and then `npm start`.
 <br>I'm using [The Movie Database API](https://developers.themoviedb.org/) to display data about popular movies.
-<br>You will need to provide an API_KEY in order to use it, once you get one go ahead and modify the `.env` file. You can also modify there the port in which the application will start listening but the frontend part will hit to that port, so I don't recommend it.
+<br>You will need to provide an `API_KEY` in order to use it, once you get one go ahead and modify the `.env` file. You can also modify there the port in which the application will start listening but the frontend part will hit to that port, so I don't recommend it.
 
 ### Frontend
 
